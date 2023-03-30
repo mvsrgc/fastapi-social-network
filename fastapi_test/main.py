@@ -137,3 +137,8 @@ def get_users(current_user: Annotated[User, Depends(get_current_active_user)]):
     with Session(engine) as session:
         users = session.exec(select(User)).all()
         return users
+
+
+@app.get("/users/me", response_model=UserRead)
+def get_me(current_user: Annotated[User, Depends(get_current_active_user)]):
+    return current_user

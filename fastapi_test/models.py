@@ -23,4 +23,3 @@ class UserCreate(UserBase):
 
 class UserRead(UserBase):
     id: uuid_pkg.UUID
-    password: str
