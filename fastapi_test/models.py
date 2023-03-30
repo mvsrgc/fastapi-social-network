@@ -1,3 +1,5 @@
+import uuid as uuid_pkg
+
 from pydantic import EmailStr
 from sqlmodel import Field, SQLModel
 
@@ -9,7 +11,9 @@ class UserBase(SQLModel):
 
 
 class User(UserBase, table=True):
-    id: int | None = Field(default=None, primary_key=True)
+    id: uuid_pkg.UUID | None = Field(
+        default_factory=uuid_pkg.uuid4, primary_key=True, index=True
+    )
     password: str
 
 
@@ -18,10 +22,5 @@ class UserCreate(UserBase):
 
 
 class UserRead(UserBase):
-    id: int
+    id: uuid_pkg.UUID
     password: str
-
-
-class Post(SQLModel, table=True):
-    id: int | None = Field(default=None, primary_key=True)
-    content: str = Field(index=True)
